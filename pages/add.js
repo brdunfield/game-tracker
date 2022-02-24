@@ -1,30 +1,54 @@
+import React, { useEffect, useState } from 'react';
+import Image from "next/image";
 import Container from "../components/container";
+import APISearch from "../components/search/api-search";
 
 const AddGame = (props) => {
+  const [gameData, setGameData] = useState(null);
+  const [coverURL, setCoverURL] = useState("");
+
+  useEffect(() => {
+    // get image for cover
+    console.log(gameData);
+    const fetchCover = async () => {
+      await fetch("/api/cover-image?gameID=" + gameData.id)
+      .then(response => response.json())
+      .then(data => {
+        setCoverURL(data.imgURL);
+      })
+    }
+    if (gameData)
+      fetchCover();
+
+  });
+
+  // set select Element
+  const optionArray = gameData ? gameData.platforms.map((platform) => {
+    return (
+      <option key={platform} value={platform}>{platform}</option>
+    )
+  }) : "";
+
+  
+
   return (
     <Container title="Add a Game">
+      <div>
+        <APISearch onGameSelect={setGameData}></APISearch>
+      </div>
+      {coverURL ? (
+        <div>
+          <Image src={coverURL} alt="Game Cover Image" width="130" height="185" layout="fixed" />
+          <h3>{gameData.name}</h3>
+        </div>
+      ) : ""}
       <form method="post">
-        <label htmlFor="name">Title:</label>
-        <input type="text" id="name" name="name" />
-        
         <label htmlFor="platform">Platform:</label>
         <select id="platform" name="platform" >
-          <option value="pc">PC</option>
-          <option value="switch">Nintendo Switch</option>
-          <option value="3ds">Nintendo 3DS</option>
-          <option value="ds">Nintendo DS</option>
-          <option value="gba">Game Boy Advanced</option>
-          <option value="wiiu">Wii U</option>
-          <option value="gamecube">Gamecube</option>
-          <option value="n64">Nintendo 64</option>
-          <option value="wii">Wii</option>
-          <option value="ps4">Playstation 4</option>
-          <option value="ps3">Playstation 3</option>
-          <option value="ps2">Playstation 2</option>
-          <option value="ps1">Playstation 1</option>
-          <option value="vita">Playstation Vita</option>
-          <option value="mobile">Mobile</option>
+          {optionArray}
         </select>
+
+        <input type="submit" value="Submit"></input>
       </form>
     </Container>
   )
