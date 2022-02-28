@@ -29,8 +29,6 @@ const AddGame = (props) => {
     )
   }) : "";
 
-  
-
   return (
     <Container title="Add a Game">
       <div>
@@ -42,11 +40,14 @@ const AddGame = (props) => {
           <h3>{gameData.name}</h3>
         </div>
       ) : ""}
-      <form method="post">
+      <form method="post" action="/api/add-game">
         <label htmlFor="platform">Platform:</label>
         <select id="platform" name="platform" >
           {optionArray}
         </select>
+        <input type="hidden" id="id" name="id" value={gameData.id} />
+        <input type="hidden" id="title" name="title" value={gameData.name} />
+        <input type="hidden" id="artwork" name="artwork" value={coverURL} />
 
         <input type="submit" value="Submit"></input>
       </form>
