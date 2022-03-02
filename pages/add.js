@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Image from "next/image";
-import Container from "../components/container";
-import APISearch from "../components/search/api-search";
+import { useRouter } from 'next/router';
+import Container from "../components/Container";
+import APISearch from "../components/search/ApiSearch";
 
 const AddGame = (props) => {
   const [gameData, setGameData] = useState(null);
   const [coverURL, setCoverURL] = useState("");
+  const [platform, setPlatform] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     // get image for cover
-    console.log(gameData);
     const fetchCover = async () => {
       await fetch("/api/cover-image?gameID=" + gameData.id)
       .then(response => response.json())
@@ -17,17 +20,42 @@ const AddGame = (props) => {
         setCoverURL(data.imgURL);
       })
     }
-    if (gameData)
+    if (gameData) {
       fetchCover();
+      if (!platform)
+        setPlatform(gameData.platforms[0]);
+    }
 
-  });
+  }, [gameData, platform]);
 
   // set select Element
+  const changePlatform = (e) => {
+    setPlatform(e.target.value);
+  }
   const optionArray = gameData ? gameData.platforms.map((platform) => {
     return (
       <option key={platform} value={platform}>{platform}</option>
     )
   }) : "";
+
+  const submitForm = async (e) => {
+    e.preventDefault();
+    // submit data
+    let body = {
+      id: gameData.id,
+      title: gameData.name,
+      artwork: coverURL,
+      platform: platform
+    }
+    await fetch("/api/add-game", {
+        method: 'POST',
+        body: JSON.stringify(body)
+      }).then(response => response.json())
+      .then(data => {
+        // TODO if error do not push
+        router.push("/games");
+      });
+  }
 
   return (
     <Container title="Add a Game">
@@ -40,16 +68,13 @@ const AddGame = (props) => {
           <h3>{gameData.name}</h3>
         </div>
       ) : ""}
-      <form method="post" action="/api/add-game">
+      <form onSubmit={submitForm}>
         <label htmlFor="platform">Platform:</label>
-        <select id="platform" name="platform" >
+        <select id="platform" name="platform" onChange={changePlatform}>
           {optionArray}
         </select>
-        <input type="hidden" id="id" name="id" value={gameData.id} />
-        <input type="hidden" id="title" name="title" value={gameData.name} />
-        <input type="hidden" id="artwork" name="artwork" value={coverURL} />
 
-        <input type="submit" value="Submit"></input>
+        <button type="submit" >Submit</button>
       </form>
     </Container>
   )

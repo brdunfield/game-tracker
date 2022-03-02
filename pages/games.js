@@ -1,24 +1,25 @@
-import Container from "../components/container";
+import Container from "../components/Container";
 import Airtable from "airtable";
+import Game from "../components/games/Game";
 
 const Games = (props) => {
   const {games} = props;
 
   const gameEles = games.map((game) => {
     return (
-      <li key={game.id}>
-        <img src={game.artwork} alt={game.title + " Cover Image"}/>
-        <span>{game.title}</span>
-      </li>
+      <Game
+        key={game.id}
+        game={game}
+      ></Game>
     )
   })
   
   return (
     <Container title="Games">
-      <div>
-        <ul>{gameEles}</ul>
-      </div>
+      <table>
+        <tbody>{gameEles}</tbody>
         
+      </table>    
     </Container>
   )
 };
@@ -39,7 +40,7 @@ const getGames = async () => {
   const games = records.map(record => {
     let game = {
       id: record.get("ID"),
-      title: record.get("Title"),
+      name: record.get("Title"),
       platform: record.get("Platform"),
       artwork: record.get("Artwork"),
       status: record.get("Status")
@@ -47,29 +48,7 @@ const getGames = async () => {
     return game;
   });
   return games;
-  /*
-  .eachPage(function page(records, fetchNextPage) {
-    // This function (`page`) will get called for each page of records.
-    console.log(games);
 
-    records.forEach(function(record) {
-      console.log('Retrieved', record.get('Title'));
-      games.push(record)
-    });
-
-    // To fetch the next page of records, call `fetchNextPage`.
-    // If there are more records, `page` will get called again.
-    // If there are no more records, `done` will get called.
-    fetchNextPage();
-  }, function done(err) {
-    if (err) { console.error(err); return; }
-    console.log(games);
-    return games;
-  });
-  console.log(gamesList.length);
-  return gamesList;
-  */
- return records;
 }
 
 // TODO Check if an unexpired token exists. If not, generate one, and then store it in the "db"

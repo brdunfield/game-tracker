@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SearchCard from "./search-card";
+import SearchCard from "./SearchCard";
 import styles from '../../styles/search.module.css'
 
 const APISearch = (props) => {
@@ -11,13 +11,13 @@ const APISearch = (props) => {
   useEffect(() => {
     const performSearch = async () => {
       if (searchValue) {
-        const res = await fetch("/api/api-search?name=" + searchValue)
+        await fetch("/api/api-search?name=" + searchValue)
           .then(response => response.json())
           .then(data => {
             //console.log(data)
             setResults(data);
             setModalVisible(true);
-          })
+          });
       } else {
         setResults([]);
       }
