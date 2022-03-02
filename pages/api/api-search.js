@@ -14,8 +14,4 @@ export default async function handler(req, res) {
       res.status(200).json(data)
     })
 
-  /*res.status(200).json([{
-    "id": 1025,
-    "name": "Zelda II: The Adventure of Link"
-  }])*/
 }

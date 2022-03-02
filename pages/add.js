@@ -53,6 +53,7 @@ const AddGame = (props) => {
       }).then(response => response.json())
       .then(data => {
         // TODO if error do not push
+        //console.log(data);
         router.push("/games");
       });
   }

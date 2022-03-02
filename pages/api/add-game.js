@@ -2,10 +2,10 @@ import Airtable from "airtable";
 
 export default async function handler(req, res) {
   const gameData = JSON.parse(req.body);
-  console.log(gameData);
+  //console.log(gameData);
   const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(process.env.AIRTABLE_BASE)
 
-  const newRecord = await base('games').create([
+  await base('games').create([
     {
       "fields": {
         "ID": parseInt(gameData.id),
@@ -15,17 +15,14 @@ export default async function handler(req, res) {
         "Status": "Not Started"
       }
     }
-  ], function done(err, records) {
-    if (err) {
-      console.error(err);
-      res.status(500).json(err);
-    }
-    records.forEach(function (record) {
+  ]).then(records => {
+    /*records.forEach(function (record) {
       console.log(record.getId());
     });
+    */
     res.status(200).json(records);
-    return records;
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).json(err);
   });
-  console.log(newRecord);
-  res.status(200);
 }
