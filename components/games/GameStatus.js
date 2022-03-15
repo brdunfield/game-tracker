@@ -10,27 +10,22 @@ const GameStatus = (props) => {
     console.log("updating status to: " + e.target.value);
 
     const body = {
-      airtableID: airtableID,
-      fields: {
+      "airtableID": airtableID,
+      "fields": {
         "Status": e.target.value
       }
     }
-    // set status before the fetch because for some reason it's being overwritten..
-    // this whole fetch is not right, need to refactor. Too many weird things
-    setNewStatus(e.target.value);
-    await fetch("/api/update-game", {
+
+    const resp = await fetch("/api/update-game", {
       method: 'POST',
       body: JSON.stringify(body)
-    }).then(response => {
-      if (response.status === 200)
-        response.json();
-      else {
-        throw new Error("HTTP status " + response.status);
-      }
-    }).then(data => {
-      // TODO - fix. not sure why data is undefined coming from the api...
-      console.log("HELLO")
     })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setNewStatus(data.status);
+        return data;
+      })
   }
 
   const selectEle = (
