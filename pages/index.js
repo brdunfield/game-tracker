@@ -1,4 +1,4 @@
-import Container from "../components/container";
+import Container from "../components/Container";
 import styles from '../styles/Container.module.css'
 import Link from 'next/link';
 

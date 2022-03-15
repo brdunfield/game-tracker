@@ -47,15 +47,25 @@ const AddGame = (props) => {
       artwork: coverURL,
       platform: platform
     }
-    await fetch("/api/add-game", {
+    try {
+      await fetch("/api/add-game", {
         method: 'POST',
         body: JSON.stringify(body)
-      }).then(response => response.json())
+      }).then(response => {
+        if (response.status === 200)
+          response.json();
+        else {
+          throw new Error("HTTP status " + response.status);
+        }
+      })
       .then(data => {
-        // TODO if error do not push
         //console.log(data);
         router.push("/games");
       });
+    } catch (err) {
+      // todo display error on screen
+      console.log(err);
+    }
   }
 
   return (
