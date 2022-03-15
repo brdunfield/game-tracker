@@ -5,46 +5,64 @@ import Container from "../components/Container";
 import APISearch from "../components/search/ApiSearch";
 
 const AddGame = (props) => {
+  
   const [gameData, setGameData] = useState(null);
-  const [coverURL, setCoverURL] = useState("");
+  const [gameExtraData, setGameExtraData] = useState({coverURL: "", platforms: []});
   const [platform, setPlatform] = useState(null);
 
   const router = useRouter();
 
   useEffect(() => {
     // get image for cover
-    const fetchCover = async () => {
-      await fetch("/api/cover-image?gameID=" + gameData.id)
-      .then(response => response.json())
-      .then(data => {
-        setCoverURL(data.imgURL);
-      })
-    }
-    if (gameData) {
-      fetchCover();
-      if (!platform)
-        setPlatform(gameData.platforms[0]);
-    }
+    const fetchDBData = async () => {
+      console.log("render")
+      // cover URL
+      const imgURL = await fetch("/api/cover-image?gameID=" + gameData.id)
+        .then(response => response.json())
+        .then(data => {
+          return data.imgURL
+          //setCoverURL(data.imgURL);
+        });
+      // platform names
+      const platformData = "(" + gameData.platforms.toString() + ")";
+      const platformNames = await fetch("/api/platform-search?platforms=" + platformData)
+        .then(response => response.json())
+        .then(data => {
+          return data.platforms;
+        });
+      
+      setGameExtraData({
+        coverURL: imgURL,
+        platforms: platformNames
+      });
+      setPlatform(platformNames[0].name);
+    };
 
-  }, [gameData, platform]);
+    if (gameData) {
+      fetchDBData();
+    };
+
+  }, [gameData]);
 
   // set select Element
   const changePlatform = (e) => {
     setPlatform(e.target.value);
   }
-  const optionArray = gameData ? gameData.platforms.map((platform) => {
+  const optionArray = gameData && gameExtraData.platforms.length > 0 ? gameData.platforms.map((platform) => {
+    const name = gameExtraData.platforms.filter(pName => pName.id == platform)[0].name;
     return (
-      <option key={platform} value={platform}>{platform}</option>
+      <option key={platform} value={name}>{name}</option>
     )
   }) : "";
 
   const submitForm = async (e) => {
     e.preventDefault();
+    console.log(platform);
     // submit data
     let body = {
       id: gameData.id,
       title: gameData.name,
-      artwork: coverURL,
+      artwork: gameExtraData.coverURL,
       platform: platform
     }
     try {
@@ -68,14 +86,20 @@ const AddGame = (props) => {
     }
   }
 
+  // use a handler instead of the setGameData function directly to clear the extra game data
+  const updateGameData =  (gameData) => {
+    setGameExtraData({coverURL: "", platforms: []});
+    setGameData(gameData);
+  };
+
   return (
     <Container title="Add a Game">
       <div>
-        <APISearch onGameSelect={setGameData}></APISearch>
+        <APISearch onGameSelect={updateGameData}></APISearch>
       </div>
-      {coverURL ? (
+      {gameExtraData.coverURL ? (
         <div>
-          <Image src={coverURL} alt="Game Cover Image" width="130" height="185" layout="fixed" />
+          <Image src={gameExtraData.coverURL} alt="Game Cover Image" width="130" height="185" layout="fixed" />
           <h3>{gameData.name}</h3>
         </div>
       ) : ""}

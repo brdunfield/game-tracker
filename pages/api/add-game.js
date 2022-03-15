@@ -2,7 +2,7 @@ import Airtable from "airtable";
 
 export default async function handler(req, res) {
   const gameData = JSON.parse(req.body);
-  //console.log(gameData);
+  console.log(gameData);
   const base = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(process.env.AIRTABLE_BASE)
 
   // check if record already exists
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
           "fields": {
             "ID": parseInt(gameData.id),
             "Title": gameData.title,
-            "Platform": parseInt(gameData.platform),
+            "Platform": gameData.platform,
             "Artwork": gameData.artwork,
             "Status": "Not Started"
           }
