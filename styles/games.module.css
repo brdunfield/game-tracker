@@ -1,3 +1,21 @@
 .artwork > img {
   height: 50px;
 }
+
+.gameName {
+  width: 200px;
+}
+.platform {
+  width: 100px;
+  display: block;
+  margin-right: 2rem;
+}
+
+.statusCell {
+  cursor: pointer;
+}
+
+.statusWrapper {
+  height: 100%;
+  cursor: pointer;
+}

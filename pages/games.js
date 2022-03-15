@@ -17,8 +17,15 @@ const Games = (props) => {
   return (
     <Container title="Games">
       <table>
-        <tbody>{gameEles}</tbody>
-        
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Platform</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>{gameEles}</tbody>   
       </table>    
     </Container>
   )
@@ -43,7 +50,8 @@ const getGames = async () => {
       name: record.get("Title"),
       platform: record.get("Platform"),
       artwork: record.get("Artwork"),
-      status: record.get("Status")
+      status: record.get("Status"),
+      airtableID: record.id
     }
     return game;
   });

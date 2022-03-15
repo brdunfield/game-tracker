@@ -1,4 +1,5 @@
 import styles from '../../styles/games.module.css';
+import GameStatus from "./GameStatus";
 
 const Game = (props) => {
   const { game } = props;
@@ -9,9 +10,9 @@ const Game = (props) => {
       <td className={styles.artwork}>
         <img src={game.artwork} alt={game.name + " Cover Image"}/>
       </td>
-      <td>{game.name}</td>
-      <td>{game.platform}</td>
-      <td>{game.status}</td>
+      <td className={styles.gameName}><strong>{game.name}</strong></td>
+      <td className={styles.platform}>{game.platform}</td>
+      <GameStatus status={game.status} airtableID={game.airtableID}></GameStatus>
     </tr>
   )
 };
