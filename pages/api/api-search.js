@@ -13,7 +13,6 @@ const searchIGDB = async(gameName, token) => {
       // if token has expired or does not exist
       if (data.message && data.message.includes("Authorization Failure")) {
         // regenerate and retry
-        console.log("generating new token")
          const newToken = await generateNewToken();
          const retryGameData = await searchIGDB(gameName, newToken);
          return retryGameData;
