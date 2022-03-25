@@ -1,8 +1,15 @@
 .modal {
   position:absolute;
-  background-color: white;
+  background-color: rgb(80, 78, 90);
   border: rgb(70, 4, 90) solid 2px;
   padding: 0 1rem;
   border-radius: 1rem;
   z-index: 10;
+}
+
+.game {
+  cursor: pointer;
+}
+.game:hover {
+  background-color: rgb(89, 87, 100);
 }

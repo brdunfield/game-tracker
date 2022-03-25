@@ -71,15 +71,15 @@ const AddGame = (props) => {
         method: 'POST',
         body: JSON.stringify(body)
       }).then(response => {
-        if (response.status === 200)
-          response.json();
+        if (response.status === 200) {
+          return response.json();
+        }
         else {
           throw new Error("HTTP status " + response.status);
         }
-      })
-      .then(data => {
-        //console.log(data);
-        router.push("/games");
+      }).then(data => {
+        // console.log(data);
+        router.push("/")
       });
     } catch (err) {
       // todo display error on screen

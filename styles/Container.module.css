@@ -1,5 +1,25 @@
 .container {
-  padding: 0 2rem;
+  color: white;
+  background-color: rgb(54, 52, 56);
+}
+
+.nav {
+  background-color:#18191a;
+  padding: 1rem;
+}
+.nav > a {
+  color: white;
+  padding-right: 1rem;
+  text-decoration: underline;
+}
+.nav > a:hover {
+  color: #ddd;
+}
+
+.mainTitle {
+  float: right;
+  margin: 0;
+  line-height: 1rem;
 }
 
 .main {
@@ -27,13 +47,13 @@
   flex-grow: 1;
 }
 
-.title {
+.pageTitle {
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
 }
 
-.title,
+.pageTitle,
 .description {
   text-align: center;
 }
