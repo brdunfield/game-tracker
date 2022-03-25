@@ -3,7 +3,7 @@ import SearchCard from "./SearchCard";
 import styles from '../../styles/search.module.css'
 
 const APISearch = (props) => {
-  const {onGameSelect} = props;
+  const {onGameSelect, token} = props;
 
   const [searchValue, setSearchValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -11,10 +11,10 @@ const APISearch = (props) => {
   useEffect(() => {
     const performSearch = async () => {
       if (searchValue) {
-        await fetch("/api/api-search?name=" + searchValue)
+        await fetch("/api/api-search?name=" + searchValue + "&token=" + token)
           .then(response => response.json())
           .then(data => {
-            //console.log(data)
+            //console.log(data);
             setResults(data);
             setModalVisible(true);
           });
@@ -38,6 +38,7 @@ const APISearch = (props) => {
     setModalVisible(false);
     onGameSelect(results.filter(game => game.id == gameID)[0]);
   }
+
   const cards = results.map((r) => {
     return (
       <SearchCard key={r.id} data={r} selectGame={selectGame}></SearchCard>
