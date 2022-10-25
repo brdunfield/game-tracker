@@ -1,21 +1,30 @@
+.artwork {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
 .artwork > img {
-  height: 50px;
+  height: 70px;
+  width: 50px;
+  margin: 1rem;
 }
 
 .gameName {
   width: 200px;
+  margin-right: 2rem;
 }
 .platform {
   width: 100px;
-  display: block;
   margin-right: 2rem;
 }
 
 .statusCell {
   cursor: pointer;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .statusWrapper {
   height: 100%;
   cursor: pointer;
+  margin-right: 1rem;
 }

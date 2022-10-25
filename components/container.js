@@ -14,10 +14,9 @@ const Container = (props) => {
       <nav className={styles.nav}>
         <Link href="/">Games</Link>
         <Link href="/add">Add Game</Link>
-        <h1 className={styles.mainTitle}>Illie's Game Tracker</h1>
+        <h1 className={styles.mainTitle}>{title}</h1>
       </nav>
       <main className={styles.main}>
-        <h2 className={styles.pageTitle}>{title}</h2>
         {children}
       </main>
 
