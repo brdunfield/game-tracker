@@ -1,6 +1,10 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 
+const Wrapper = styled.div`
+  margin: 2rem 0;
+`;
+
 const Year = styled.span`
   font-size: 1.5em;
   padding: 1rem;
@@ -37,9 +41,9 @@ const Tabs = (props) => {
 
   return (
     <>
-      <div role="tablist">
+      <Wrapper role="tablist">
         {options}
-      </div>
+      </Wrapper>
     </>
   )
 };

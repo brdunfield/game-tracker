@@ -82,7 +82,6 @@ const getGames = async (year) => {
     let gameDate = new Date(game.date);
     return (gameDate.getFullYear().toString() === year);
   });
-  console.log(currentYearGames.length);
   return currentYearGames;
 }
 
