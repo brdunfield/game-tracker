@@ -2,7 +2,6 @@ import Airtable from "airtable";
 
 export default async function handler(req, res) {
   const gameData = JSON.parse(req.body);
-  console.log(gameData);
 
   // TODO check platform match and allow multiple
   const respData = await createRecord(gameData);

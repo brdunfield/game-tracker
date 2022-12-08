@@ -12,7 +12,8 @@ const GameStatus = (props) => {
     const body = {
       "airtableID": airtableID,
       "fields": {
-        "Status": e.target.value
+        "Status": e.target.value,
+        "Date": new Date().toISOString().substring(0,10),
       }
     }
 

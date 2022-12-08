@@ -1,6 +1,7 @@
+import Link from 'next/link';
 import styled from 'styled-components';
 
-const Button = styled.button`
+const Year = styled.span`
   font-size: 1.5em;
   padding: 1rem;
   background-color: grey;
@@ -16,20 +17,21 @@ const Button = styled.button`
     border-bottom-right-radius: .5rem;
   }
 `;
-const SelectedButton = styled(Button)`
+const SelectedYear = styled(Year)`
   background-color: purple;
 `
 
 const Tabs = (props) => {
-  const { years, selected , onChange} = props;
+  const { years, selected} = props;
 
   const options = years.map(year => {
-    if (year === selected)
+    const href = `/games/${year}`;
+    if (year.toString() === selected)
       return (
-        <SelectedButton value={year} key={year}>{year}</SelectedButton>
+        <SelectedYear key={year}><Link href={href}>{year}</Link></SelectedYear>
       )
     return (
-      <Button value={year} key={year} onClick={() => onChange(year)}>{year}</Button>
+      <Year key={year}><Link href={href}>{year}</Link></Year>
     )
   })
 

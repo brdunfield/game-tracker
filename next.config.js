@@ -4,6 +4,15 @@ const nextConfig = {
   images: {
     domains: ['images.igdb.com'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/games',
+        destination: '/games/All',
+        permanent: false,
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig

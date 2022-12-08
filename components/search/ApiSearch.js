@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import SearchCard from "./SearchCard";
-import styles from '../../styles/search.module.css'
+import styles from '../../styles/search.module.css';
+
+const Label = styled.label`
+  margin-right: 2em;
+`;
 
 const APISearch = (props) => {
   const {onGameSelect, token} = props;
@@ -46,8 +51,8 @@ const APISearch = (props) => {
   });
 
   return (
-    <>
-      <label htmlFor="api-search">Title Search:</label>
+    <div>
+      <Label htmlFor="api-search">Title Search:</Label>
       <input type="search" id="api-search" value={searchValue} onChange={e => setSearchValue(e.target.value)}/>
       { modalVisible ? (
         <div className={styles.modal}>
@@ -55,7 +60,7 @@ const APISearch = (props) => {
         </div>
       ) : ""}
 
-    </>
+    </div>
   )
 }
 

@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import Container from "../components/Container";
 import APISearch from "../components/search/ApiSearch";
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 2rem;x
+`;
+const PlatformSelect = styled.select`
+  min-width: 100px;
+  margin: 0 2rem;;
+`;
+const GameTitle = styled.h3`
+  display: inline-block;
+  margin-left: 1rem;
+`;
 
 const AddGame = (props) => {
   const {token} = props;
@@ -95,23 +110,23 @@ const AddGame = (props) => {
 
   return (
     <Container title="Add a Game">
-      <div>
-        <APISearch onGameSelect={updateGameData} token={token}></APISearch>
-      </div>
+      <APISearch onGameSelect={updateGameData} token={token}></APISearch>
       {gameExtraData.coverURL ? (
-        <div>
+        <Wrapper>
           <Image src={gameExtraData.coverURL} alt="Game Cover Image" width="130" height="185" layout="fixed" />
-          <h3>{gameData.name}</h3>
-        </div>
+          <GameTitle>{gameData.name}</GameTitle>
+        </Wrapper>
       ) : ""}
-      <form onSubmit={submitForm}>
-        <label htmlFor="platform">Platform:</label>
-        <select id="platform" name="platform" onChange={changePlatform}>
-          {optionArray}
-        </select>
+      {gameData ? (
+        <form onSubmit={submitForm}>
+          <label htmlFor="platform">Platform:</label>
+          <PlatformSelect id="platform" name="platform" onChange={changePlatform}>
+            {optionArray}
+          </PlatformSelect>
 
-        <button type="submit" >Submit</button>
-      </form>
+          <button type="submit" >Submit</button>
+        </form>
+      ): ""}
     </Container>
   )
 };
