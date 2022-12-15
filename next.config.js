@@ -10,6 +10,11 @@ const nextConfig = {
         source: '/games',
         destination: '/games/All',
         permanent: false,
+      },
+      { // redirect empty index page for now
+        source: '/',
+        destination: '/games/All',
+        permanent: false,
       }
     ]
   }
