@@ -94,7 +94,7 @@ const AddGame = (props) => {
         }
       }).then(data => {
         // console.log(data);
-        router.push("/")
+        router.push("/games")
       });
     } catch (err) {
       // todo display error on screen

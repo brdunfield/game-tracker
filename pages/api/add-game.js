@@ -27,7 +27,8 @@ const createRecord = async (gameData) => {
               "Title": gameData.title,
               "Platform": gameData.platform,
               "Artwork": gameData.artwork,
-              "Status": "Not Started"
+              "Status": "Not Started",
+              "Date": new Date().toISOString().substring(0,10),
             }
           }
         ]).then(records => {

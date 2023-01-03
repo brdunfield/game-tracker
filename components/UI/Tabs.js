@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   margin: 2rem 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow-x: scroll;
 `;
 
 const Year = styled.span`
@@ -12,6 +15,7 @@ const Year = styled.span`
   color: white;
   border: none;
   cursor: pointer;
+  display: inline-block;
   &:first-child {
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;

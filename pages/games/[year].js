@@ -6,7 +6,7 @@ import Game from "../../components/games/Game";
 import Tabs from "../../components/UI/Tabs";
 
 const Table = styled.table`
-  border-spacing: 0 1rem;
+  border-spacing: 0 .25rem;
 `;
 
 const Games = (props) => {
@@ -39,6 +39,7 @@ const Games = (props) => {
       <Table>
         <thead>
           <tr>
+            <th></th>
             <th></th>
             <th>Title</th>
             <th>Platform</th>
