@@ -11,7 +11,11 @@ export default async function handler(req, res) {
       "fields": updateData.fields
     }
   ]).then(records => {
-    res.status(200).json({status: records[0].get("Status")});
+    res.status(200).json({
+      status: records[0].get("Status"),
+      platform: records[0].get("Platform"),
+      date: records[0].get("Date")
+    });
   }).catch(err => {
     console.error(err);
   });

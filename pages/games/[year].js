@@ -4,13 +4,14 @@ import Container from "../../components/Container";
 import Airtable from "airtable";
 import Game from "../../components/games/Game";
 import Tabs from "../../components/UI/Tabs";
+import { getToken } from '../../lib/util';
 
 const Table = styled.table`
   border-spacing: 0 .25rem;
 `;
 
 const Games = (props) => {
-  const {games, year} = props;
+  const {games, year, token} = props;
 
   let years = ["All"];
   let currentYear = new Date().getFullYear();
@@ -25,8 +26,9 @@ const Games = (props) => {
   const gameEles = games.map((game) => {
     return (
       <Game
-        key={game.id}
-        game={game}
+        key = {game.id}
+        game = {game}
+        token = {token}
       ></Game>
     )
   })
@@ -56,8 +58,10 @@ export const getServerSideProps = async(context) => {
   const year = context.query.year;
   let games = await getGames(year);
 
+  const token = await getToken();
+
   return {
-    props: {games: games, year: year}, // will be passed to the page component as props
+    props: {games: games, year: year, token: token}, // will be passed to the page component as props
   }
 }
 
